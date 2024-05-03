@@ -23,7 +23,16 @@ class CategoriesController extends Controller
             return DataTables::of($categories)
                 ->addIndexColumn()
                 ->addColumn('action', function ($category) {
-                    return '<button class="btn btn-info edit-category-btn" data-id="' . $category->id . '">Edit</button> <button class="btn btn-danger delete-category-btn" id="delete-category-btn-' . $category->id . '">Delete</button>';
+                    $editButton = '';
+                    $deleteButton = '';
+
+                    if (auth()->user()->can('edit-category')) {
+                        $editButton = '<button class="btn btn-info edit-category-btn" data-id="' . $category->id . '">Edit</button>';
+                    }
+                    if (auth()->user()->can('delete-category')) {
+                        $deleteButton = '<button class="btn btn-danger delete-category-btn" id="delete-category-btn-' . $category->id . '">Delete</button>';
+                    }
+                    return $editButton . ' ' . $deleteButton;
                 })
                 ->rawColumns(['action'])
                 ->make(true);

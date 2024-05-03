@@ -101,7 +101,5 @@
         </div>
     </div>
 </section>
-
 @endsection
-@push('scripts')
-@endpush
+

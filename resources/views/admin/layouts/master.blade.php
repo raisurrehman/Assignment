@@ -166,20 +166,37 @@
                   Dashboard
                 </p>
               </a>
-
-            <li class="nav-item has-treeview">
+            </li>
+            <li class="nav-item">
+              <a href="{{route('users')}}" class="nav-link {{ $menu_active == 'users' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Users
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="{{route('categories')}}" class="nav-link {{ $menu_active == 'categories' ? 'active' : '' }}">
-                <i class="nav-icon fas fa-circle"></i>
+                <i class="nav-icon fas fa-folder"></i>
                 <p>
                   Categories
                 </p>
               </a>
             </li>
-            <li class="nav-item has-treeview">
+            <li class="nav-item">
               <a href="{{route('products')}}" class="nav-link {{ $menu_active == 'products' ? 'active' : '' }}">
-                <i class="nav-icon fas fa-circle"></i>
+                <i class="nav-icon fas fa-box"></i>
                 <p>
                   Products
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{route('roles')}}" class="nav-link {{ $menu_active == 'roles' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-key"></i>
+                <p>
+                  Roles & Permissions
                 </p>
               </a>
             </li>

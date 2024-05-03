@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductsController;
+use App\Http\Controllers\Admin\RolePermissionsController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +23,21 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
+
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('users', [UserController::class, 'index'])->name('users');
+    Route::get('users/{user}/assign-role', [UserController::class, 'assignRole'])->name('users.assign-role');
+    Route::post('users/{user}/assign-role', [UserController::class, 'updateAssignedRoles'])->name('users.assign-role');
+
+    Route::get('roles', [RolePermissionsController::class, 'index'])->name('roles');
+    Route::post('roles', [RolePermissionsController::class, 'store'])->name('roles.store');
+    Route::get('roles/{id}/edit', [RolePermissionsController::class, 'edit'])->name('roles.edit');
+    Route::put('roles/{id}', [RolePermissionsController::class, 'update'])->name('roles.update');
+    Route::delete('/roles/{id}', [RolePermissionsController::class, 'destroy'])->name('roles.destroy');
+    Route::get('roles/{role}/permissions', [RolePermissionsController::class, 'permissions'])->name('roles.permissions');
+    Route::post('roles/{role}/permissions', [RolePermissionsController::class, 'updatePermissions'])->name('roles.permissions');
+
     Route::get('categories', [CategoriesController::class, 'index'])->name('categories');
     Route::post('categories', [CategoriesController::class, 'store'])->name('categories.store');
     Route::get('categories/{id}/edit', [CategoriesController::class, 'edit'])->name('categories.edit');
