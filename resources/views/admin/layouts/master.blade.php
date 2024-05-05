@@ -156,50 +156,63 @@
           </div>
         </div>
 
-        <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+            @can('view-dashboard')
             <li class="nav-item has-treeview menu-open">
-              <a href="{{route('dashboard')}}" class="nav-link  {{ $menu_active == 'dashboard' ? 'active' : '' }}">
+              <a href="{{ route('dashboard') }}" class="nav-link {{ $menu_active == 'dashboard' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Dashboard
                 </p>
               </a>
             </li>
+            @endcan
+
+            @can('view-users')
             <li class="nav-item">
-              <a href="{{route('users')}}" class="nav-link {{ $menu_active == 'users' ? 'active' : '' }}">
+              <a href="{{ route('users') }}" class="nav-link {{ $menu_active == 'users' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-user"></i>
                 <p>
                   Users
                 </p>
               </a>
             </li>
+            @endcan
+
+            @can('view-categories')
             <li class="nav-item">
-              <a href="{{route('categories')}}" class="nav-link {{ $menu_active == 'categories' ? 'active' : '' }}">
+              <a href="{{ route('categories') }}" class="nav-link {{ $menu_active == 'categories' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-folder"></i>
                 <p>
                   Categories
                 </p>
               </a>
             </li>
+            @endcan
+
+            @can('view-products')
             <li class="nav-item">
-              <a href="{{route('products')}}" class="nav-link {{ $menu_active == 'products' ? 'active' : '' }}">
+              <a href="{{ route('products') }}" class="nav-link {{ $menu_active == 'products' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-box"></i>
                 <p>
                   Products
                 </p>
               </a>
             </li>
+            @endcan
 
+            @can('view-roles')
             <li class="nav-item">
-              <a href="{{route('roles')}}" class="nav-link {{ $menu_active == 'roles' ? 'active' : '' }}">
+              <a href="{{ route('roles') }}" class="nav-link {{ $menu_active == 'roles' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-key"></i>
                 <p>
                   Roles & Permissions
                 </p>
               </a>
             </li>
+            @endcan
 
           </ul>
         </nav>

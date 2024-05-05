@@ -74,9 +74,22 @@
             serverSide: true,
             ajax: "{{ route('products') }}",
             columns: [
-                { data: 'id', name: 'id' },
-                { data: 'name', name: 'name' },
-                { data: 'price', name: 'price' },
+                { 
+                    data: 'id', 
+                    name: 'id' 
+                },
+                { 
+                    data: 'name', 
+                    name: 'name',
+                    render: function (data, type, full, meta) {
+                        // Assuming 'featured_image_url' is a property in your data representing the image URL
+                        return '<img src="' + full.featured_image_url + '" alt="' + data + '" style="max-width: 100px;">';
+                    } 
+                },
+                { 
+                    data: 'price', 
+                    name: 'price' 
+                },
                 {
                     data: 'categories',
                     name: 'categories',
@@ -88,7 +101,12 @@
                         return categoriesHtml;
                     }
                 },
-                { data: 'action', name: 'action', orderable: false, searchable: false }
+                { 
+                    data: 'action', 
+                    name: 'action', 
+                    orderable: false, 
+                    searchable: false 
+                }
             ]
         });
 
@@ -116,7 +134,5 @@
             toastr.error('This is an error toast message.');
         });
     });
-
-
 </script>
 @endpush

@@ -8,7 +8,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    @can('create-category')
+                    @can('create-categories')
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCategoryModal">
                         Add Category
                     </button>

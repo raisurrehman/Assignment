@@ -6,51 +6,96 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
     public function run(): void
     {
-        $admin = User::create([
+        $adminData = [
             'name' => 'Admin',
             'email' => 'admin@admin.com',
-            'password' => bcrypt('password'),
-        ]);
+            'password' => Hash::make('Pass@123'),
+        ];
 
-        $subadmin = User::create([
-            'name' => 'subadmin',
+        $subadminData = [
+            'name' => 'Sub Admin',
             'email' => 'subadmin@admin.com',
-            'password' => bcrypt('Pass@123'),
-        ]);
+            'password' => Hash::make('Pass@123'),
+        ];
+
+        $admin = User::create($adminData);
+        $subadmin = User::create($subadminData);
 
         $adminRole = Role::create(['name' => 'admin']);
-        $subAdminRole = Role::create(['name' => 'subadmin']);
+        $subAdminRole = Role::create(['name' => 'sub-admin']);
+
+        $this->createPermissions();
 
         $admin->assignRole($adminRole);
         $subadmin->assignRole($subAdminRole);
 
-        Permission::create(['name' => 'view-products']);
-        Permission::create(['name' => 'create-products']);
-        Permission::create(['name' => 'edit-products']);
-        Permission::create(['name' => 'delete-products']);
+        $this->assignAdminPermissions($adminRole);
+        $this->assignSubAdminPermissions($subAdminRole);
+    }
 
-        Permission::create(['name' => 'view-category']);
-        Permission::create(['name' => 'create-category']);
-        Permission::create(['name' => 'edit-category']);
-        Permission::create(['name' => 'delete-category']);
-
-        $adminRole->givePermissionTo([
+    /**
+     * Create permissions.
+     *
+     * @return void
+     */
+    private function createPermissions(): void
+    {
+        $permissions = [
+            'view-dashboard',
             'view-products', 'create-products', 'edit-products', 'delete-products',
-            'view-category', 'create-category', 'edit-category', 'delete-category',
-        ]);
+            'view-categories', 'create-categories', 'edit-categories', 'delete-categories',
+            'view-roles', 'create-roles', 'edit-roles','assign-roles',
+            'manage-permissions',
+        ];
 
-        $subAdminRole->givePermissionTo([
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
+    }
+
+    /**
+     * Assign permissions to admin role.
+     *
+     * @param \Spatie\Permission\Models\Role $role
+     * @return void
+     */
+    private function assignAdminPermissions(Role $role): void
+    {
+        $permissions = [
+            'view-dashboard',
+            'view-products', 'create-products', 'edit-products', 'delete-products',
+            'view-categories', 'create-categories', 'edit-categories', 'delete-categories',
+            'view-roles', 'create-roles', 'edit-roles','assign-roles',
+            'manage-permissions',
+        ];
+
+        $role->givePermissionTo($permissions);
+    }
+
+    /**
+     * Assign permissions to sub-admin role.
+     *
+     * @param \Spatie\Permission\Models\Role $role
+     * @return void
+     */
+    private function assignSubAdminPermissions(Role $role): void
+    {
+        $permissions = [
             'view-products', 'create-products',
-            'view-category', 'create-category',
-        ]);
+            'view-categories', 'create-categories',
+        ];
 
+        $role->givePermissionTo($permissions);
     }
 }

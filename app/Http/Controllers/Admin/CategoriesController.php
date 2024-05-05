@@ -26,10 +26,10 @@ class CategoriesController extends Controller
                     $editButton = '';
                     $deleteButton = '';
 
-                    if (auth()->user()->can('edit-category')) {
+                    if (auth()->user()->can('edit-categories')) {
                         $editButton = '<button class="btn btn-info edit-category-btn" data-id="' . $category->id . '">Edit</button>';
                     }
-                    if (auth()->user()->can('delete-category')) {
+                    if (auth()->user()->can('delete-categories')) {
                         $deleteButton = '<button class="btn btn-danger delete-category-btn" id="delete-category-btn-' . $category->id . '">Delete</button>';
                     }
                     return $editButton . ' ' . $deleteButton;
