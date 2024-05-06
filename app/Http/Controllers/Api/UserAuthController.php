@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Mail\NewUserNotification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserAuthController extends Controller
 {
@@ -40,6 +42,8 @@ class UserAuthController extends Controller
         ]);
 
         $token = $user->createToken('authToken')->plainTextToken;
+
+        Mail::to('raisurrehman034@gmail.com')->queue(new NewUserNotification($user));
 
         return response()->json(['message' => 'User registered successfully', 'token' => $token, 'user' => new UserResource($user)], 201);
     }
