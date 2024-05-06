@@ -46,9 +46,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/products', [ProductsController::class, 'index'])->name('products')->middleware('permission:view-products');
     Route::get('/products/create', [ProductsController::class, 'create'])->name('products.create')->middleware('permission:create-products');
-    Route::post('/products/create', [ProductsController::class, 'store'])->name('products.create')->middleware('permission:create-products');
+    Route::post('/products/store', [ProductsController::class, 'store'])->name('products.store')->middleware('permission:create-products');
     Route::get('/products/{id}/edit', [ProductsController::class, 'edit'])->name('products.edit')->middleware('permission:edit-products');
-    Route::post('/products/{id}/edit', [ProductsController::class, 'update'])->name('products.edit')->middleware('permission:edit-products');
+    Route::post('/products/{id}/update', [ProductsController::class, 'update'])->name('products.update')->middleware('permission:edit-products');
     Route::delete('/products/{id}', [ProductsController::class, 'destroy'])->name('products.destroy')->middleware('permission:delete-products');
 });
 

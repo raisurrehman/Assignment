@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission as AppPermissions;
 use Spatie\Permission\Models\Role as AppRole;
 
@@ -42,9 +43,15 @@ class RolePermissionsController extends Controller
     // Store Role
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ], [
+            'name.required' => 'Name field is required.',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
         $role = new AppRole();
         $role->name = $request->name;
@@ -64,9 +71,15 @@ class RolePermissionsController extends Controller
     public function update(Request $request, $id)
     {
 
-        $request->validate([
-            'name' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ], [
+            'name.required' => 'Name field is required.',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
         $role = AppRole::find($id);
         $role->name = $request->name;

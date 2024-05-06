@@ -1,89 +1,118 @@
 @extends('admin.layouts.master')
 @section('content')
-<div class="content-header">
+<section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Roles & Permissions</h1>
+                <h1>Roles & Permissions</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRoleModal">
-                            Add Role
-                        </button>
-                    </li>
+                    <li class="breadcrumb-item"><a href="">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Roles & Permissions</li>
                 </ol>
             </div>
         </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<div class="modal fade" id="addRoleModal">
+    <div class="modal-dialog">
+        <form id="add-role-form" method="POST" action="{{ route('roles.store') }}">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Role</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input id="name" type="text" class="form-control" name="name" autofocus>
+                        <span class="text-danger" id="name-error"></span>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button> <!-- Corrected class -->
+                </div>
+            </div>
+        </form>
     </div>
 </div>
-<section class="content">
-    <div class="container-fluid">
-        <!-- Add Role Modal -->
-        <div class="modal fade" id="addRoleModal" tabindex="-1" role="dialog" aria-labelledby="addRoleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addRoleModalLabel">Add Role</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="add-role-form" method="POST" action="{{ route('roles.store') }}">
-                            @csrf
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input id="name" type="text" class="form-control" name="name" autofocus>
-                                <span class="text-danger" id="error" style="display:none">required *</span>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Add</button>
-                        </form>
+
+<div class="modal fade" id="editRoleModal">
+    <div class="modal-dialog">
+        <form id="edit-role-form" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Role</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="role_id" id="edit-role-id">
+                    <div class="form-group">
+                        <label for="edit-name">Name</label>
+                        <input id="edit-name" type="text" class="form-control" name="name" autofocus>
+                        <span class="text-danger" id="name-error-edit"></span>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- Edit Modal -->
-        <div class="modal fade" id="editRoleModal" tabindex="-1" role="dialog" aria-labelledby="editRoleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editRoleModalLabel">Edit Role</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="edit-role-form" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <input type="hidden" name="role_id" id="edit-role-id">
-                            <div class="form-group">
-                                <label for="edit-name">Name</label>
-                                <input id="edit-name" type="text" class="form-control" name="name" autofocus>
-                                <span class="text-danger" id="error-edit" style="display:none">required *</span>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </form>
-                    </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button> <!-- Corrected class -->
                 </div>
             </div>
-        </div>
-
-        <table class="table table-bordered" id="roles-table">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-
+        </form>
     </div>
+</div>
+
+<section class="content">
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="card-title">Users</h3>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#addRoleModal">
+                                    Add Role
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="roles-table" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </section>
 
 @endsection
@@ -113,10 +142,16 @@
                 success: function (response) {
                     toastr.success('Role created successfully.');
                     dataTable.ajax.reload();
+                    $('#add-role-form')[0].reset();
                     $('#addRoleModal').modal('hide');
                 },
                 error: function (xhr, status, error) {
-                    $('#error').show();
+                    if (xhr.responseJSON && xhr.responseJSON.errors) {
+                        var errors = xhr.responseJSON.errors;
+                        $.each(errors, function (key, value) {
+                            $('#' + key + '-error').text(value[0]); // Populate error message container
+                        });
+                    }
                 }
             });
         });
@@ -150,7 +185,12 @@
                     $('#editRoleModal').modal('hide');
                 },
                 error: function (xhr, status, error) {
-                    $('#error-edit').show();
+                    if (xhr.responseJSON && xhr.responseJSON.errors) {
+                        var errors = xhr.responseJSON.errors;
+                        $.each(errors, function (key, value) {
+                            $('#' + key + '-error-edit').text(value[0]);
+                        });
+                    }
                 }
             });
         });
