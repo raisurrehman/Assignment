@@ -175,7 +175,7 @@
             @can('view-users')
             <li class="nav-item">
               <a href="{{ route('users') }}" class="nav-link {{ $menu_active == 'users' ? 'active' : '' }}">
-                <i class="nav-icon fas fa-user"></i>
+                <i class="nav-icon fas fa-users"></i>
                 <p>
                   Users
                 </p>
@@ -215,7 +215,6 @@
               </a>
             </li>
             @endcan
-
           </ul>
         </nav>
         <!-- /.sidebar-menu -->

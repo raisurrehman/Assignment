@@ -9,28 +9,53 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="">Dashboard</a></li>
-                    <li class="breadcrumb-item active">users</li>
+                    <li class="breadcrumb-item active">Users</li>
                 </ol>
             </div>
         </div>
     </div><!-- /.container-fluid -->
 </section>
 <section class="content">
-    <div class="container-fluid">
-        <table class="table table-bordered" id="user-table">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>email</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-
-    </div>
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col">
+                                <h3 class="card-title">Users</h3>
+                            </div>
+                            <div class="col-auto">
+                                <!-- <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#addCategoryModal">
+                                    Add Users
+                                </button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="user-table" class="table table-bordered table-striped">
+                            <thead>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>email</th>
+                                <th>Action</th>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>email</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </section>
 </section>
 
 @endsection

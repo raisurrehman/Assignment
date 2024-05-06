@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -55,7 +55,8 @@ class UsersTableSeeder extends Seeder
             'view-dashboard',
             'view-products', 'create-products', 'edit-products', 'delete-products',
             'view-categories', 'create-categories', 'edit-categories', 'delete-categories',
-            'view-roles', 'create-roles', 'edit-roles','assign-roles',
+            'view-roles', 'create-roles', 'edit-roles', 'assign-roles',
+            'view-users', 'create-users', 'edit-users',
             'manage-permissions',
         ];
 
@@ -76,7 +77,8 @@ class UsersTableSeeder extends Seeder
             'view-dashboard',
             'view-products', 'create-products', 'edit-products', 'delete-products',
             'view-categories', 'create-categories', 'edit-categories', 'delete-categories',
-            'view-roles', 'create-roles', 'edit-roles','assign-roles',
+            'view-roles', 'create-roles', 'edit-roles', 'assign-roles',
+            'view-users', 'create-users', 'edit-users',
             'manage-permissions',
         ];
 
