@@ -7,16 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Product extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
-    protected $with = ['featuredImage','categories'];
+    protected $with = ['featuredImage', 'categories'];
     protected $appends = ['featured_image_url'];
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('featured_image')->onlyKeepLatest(1);
+        $this->addMediaCollection('featured_image')
+            ->singleFile()
+            ->registerMediaConversions(function (Media $media) {
+                $this->addMediaConversion('compressed')
+                    ->width(800)
+                    ->quality(70)
+                    ->optimize();
+            });
+
         $this->addMediaCollection('gallery')->onlyKeepLatest(15);
     }
 
