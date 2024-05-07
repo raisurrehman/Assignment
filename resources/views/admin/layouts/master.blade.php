@@ -19,6 +19,8 @@
   <link rel="stylesheet" href="{{ asset(env('ADMIN_THEME')) }}/plugins/summernote/summernote-bs4.css">
   <link rel="stylesheet" href="{{ asset(env('ADMIN_THEME')) }}/plugins/select2/css/select2.min.css">
   <link rel="stylesheet" href="{{ asset(env('ADMIN_THEME')) }}/plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="{{ asset(env('ADMIN_THEME')) }}/dist/css/custom.css">
+  <link rel="stylesheet" href="{{ asset(env('ADMIN_THEME')) }}/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 </head>
@@ -156,34 +158,63 @@
           </div>
         </div>
 
-        <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+            @can('view-dashboard')
             <li class="nav-item has-treeview menu-open">
-              <a href="{{route('dashboard')}}" class="nav-link  {{ $menu_active == 'dashboard' ? 'active' : '' }}">
+              <a href="{{ route('dashboard') }}" class="nav-link {{ $menu_active == 'dashboard' ? 'active' : '' }}">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                   Dashboard
                 </p>
               </a>
+            </li>
+            @endcan
 
-            <li class="nav-item has-treeview">
-              <a href="{{route('categories')}}" class="nav-link {{ $menu_active == 'categories' ? 'active' : '' }}">
-                <i class="nav-icon fas fa-circle"></i>
+            @can('view-users')
+            <li class="nav-item">
+              <a href="{{ route('users') }}" class="nav-link {{ $menu_active == 'users' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                  Users
+                </p>
+              </a>
+            </li>
+            @endcan
+
+            @can('view-categories')
+            <li class="nav-item">
+              <a href="{{ route('categories') }}" class="nav-link {{ $menu_active == 'categories' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-folder"></i>
                 <p>
                   Categories
                 </p>
               </a>
             </li>
-            <li class="nav-item has-treeview">
-              <a href="{{route('products')}}" class="nav-link {{ $menu_active == 'products' ? 'active' : '' }}">
-                <i class="nav-icon fas fa-circle"></i>
+            @endcan
+
+            @can('view-products')
+            <li class="nav-item">
+              <a href="{{ route('products') }}" class="nav-link {{ $menu_active == 'products' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-box"></i>
                 <p>
                   Products
                 </p>
               </a>
             </li>
+            @endcan
 
+            @can('view-roles')
+            <li class="nav-item">
+              <a href="{{ route('roles') }}" class="nav-link {{ $menu_active == 'roles' ? 'active' : '' }}">
+                <i class="nav-icon fas fa-key"></i>
+                <p>
+                  Roles & Permissions
+                </p>
+              </a>
+            </li>
+            @endcan
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -236,7 +267,9 @@
   <script src="{{ asset(env('ADMIN_THEME')) }}/dist/js/demo.js"></script>
   <script src="{{ asset(env('ADMIN_THEME')) }}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
   <script src="{{ asset(env('ADMIN_THEME')) }}/plugins/toastr/toastr.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+  <script src="{{ asset(env('ADMIN_THEME')) }}//plugins/datatables/jquery.dataTables.js"></script>
+  <script src="{{ asset(env('ADMIN_THEME')) }}/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+
 
   <script>
     $.ajaxSetup({
@@ -269,7 +302,9 @@
     @if (session() -> has('error'))
       toastr.error('{{ session()->get('error') }}')
     @endif
+
   </script>
+
   @stack('scripts')
 </body>
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoriesController extends Controller
 {
@@ -23,7 +24,16 @@ class CategoriesController extends Controller
             return DataTables::of($categories)
                 ->addIndexColumn()
                 ->addColumn('action', function ($category) {
-                    return '<button class="btn btn-info edit-category-btn" data-id="' . $category->id . '">Edit</button> <button class="btn btn-danger delete-category-btn" id="delete-category-btn-' . $category->id . '">Delete</button>';
+                    $editButton = '';
+                    $deleteButton = '';
+
+                    if (auth()->user()->can('edit-categories')) {
+                        $editButton = '<button class="btn btn-info edit-category-btn" data-id="' . $category->id . '">Edit</button>';
+                    }
+                    if (auth()->user()->can('delete-categories')) {
+                        $deleteButton = '<button class="btn btn-danger delete-category-btn" id="delete-category-btn-' . $category->id . '">Delete</button>';
+                    }
+                    return $editButton . ' ' . $deleteButton;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -38,10 +48,15 @@ class CategoriesController extends Controller
     // Store category
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ], [
+            'name.required' => 'Name field is required.',
         ]);
 
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
         $category = new Category();
         $category->name = $request->name;
         $category->description = $request->description;
@@ -60,10 +75,15 @@ class CategoriesController extends Controller
     // Update the category
     public function update(Request $request, $id)
     {
-
-        $request->validate([
-            'name' => 'required|string|max:255',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ], [
+            'name.required' => 'Name field is required.',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
 
         $category = Category::find($id);
         $category->name = $request->name;
