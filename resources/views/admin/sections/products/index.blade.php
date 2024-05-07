@@ -130,9 +130,6 @@
             });
         });
 
-
-
-
         var dataTable = $('#products-table').DataTable({
             processing: true,
             serverSide: true,

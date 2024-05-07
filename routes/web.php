@@ -22,13 +22,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('permission:view-dashboard');
 
     Route::get('users', [UserController::class, 'index'])->name('users')->middleware('permission:view-users');
-    Route::get('users/{user}/assign-role', [UserController::class, 'assignRole'])->name('users.assign-role')->middleware('permission:assign-roles');
-    Route::post('users/{user}/assign-role', [UserController::class, 'updateAssignedRoles'])->name('users.assign-role')->middleware('permission:assign-roles');
+    Route::get('users/create', [UserController::class, 'create'])->name('users.create')->middleware('permission:create-users');
+    Route::get('users/{userId}/assign-role', [UserController::class, 'assignRole'])->name('users.assign-role')->middleware('permission:assign-roles');
+    Route::post('users/{userId}/assign-role', [UserController::class, 'updateAssignedRoles'])->name('users.assign-role')->middleware('permission:assign-roles');
 
     Route::get('roles', [RolePermissionsController::class, 'index'])->name('roles')->middleware('permission:view-roles');
     Route::post('roles', [RolePermissionsController::class, 'store'])->name('roles.store')->middleware('permission:create-roles');
@@ -51,7 +51,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/products/{id}/update', [ProductsController::class, 'update'])->name('products.update')->middleware('permission:edit-products');
     Route::delete('/products/{id}', [ProductsController::class, 'destroy'])->name('products.destroy')->middleware('permission:delete-products');
 });
-
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

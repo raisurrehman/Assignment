@@ -19,7 +19,7 @@ class UserController extends Controller
             return DataTables::of($users)
                 ->addIndexColumn()
                 ->addColumn('action', function ($user) {
-                    return '<a href="' . route('users.assign-role', $user->id) . '" class="btn btn-info">Assign Role</a>';
+                    return '<button class="btn btn-primary assign-role" data-id="' . $user->id . '">Assign Role</button>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -32,12 +32,11 @@ class UserController extends Controller
         ]);
     }
 
-    public function assignRole(User $user)
+    public function assignRole($userId)
     {
 
-        $user = $user->load('roles');
+        $user = User::find($userId)->load('roles');
         $roles = AppRole::get();
-
         return view('admin.sections.users.roles.assign', [
             'title' => 'Users',
             'menu_active' => 'users',
@@ -47,8 +46,9 @@ class UserController extends Controller
 
     }
 
-    public function updateAssignedRoles(Request $request, User $user)
+    public function updateAssignedRoles(Request $request, $userId)
     {
+        $user = User::find($userId);
         $user->roles()->detach();
 
         foreach ($request->roles as $roleId) {
@@ -56,7 +56,7 @@ class UserController extends Controller
             $user->assignRole($role);
         }
 
-        return redirect()->route('users')->with('success', 'Roles assigned successfully');
+        return response()->json(['message' => 'Role updated successfully'], 200);
     }
 
 }
