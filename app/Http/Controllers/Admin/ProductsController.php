@@ -16,10 +16,20 @@ class ProductsController extends Controller
     {
         if ($request->ajax()) {
             $data = Product::get();
+
             return datatables()->of($data)
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' . route("products.edit", $row->id) . '" class="edit btn btn-primary btn-sm">Edit</a> <button class="delete btn btn-danger btn-sm" data-id="' . $row->id . '">Delete</button>';
-                    return $btn;
+                    $editButton = '';
+                    $deleteButton = '';
+
+                    if (auth()->user()->can('edit-products')) {
+                        $editButton = '<a href="' . route("products.edit", $row->id) . '" class="edit btn btn-primary btn-sm">Edit</a>';
+                    }
+
+                    if (auth()->user()->can('delete-products')) {
+                        $deleteButton = '<button class="delete btn btn-danger btn-sm" data-id="' . $row->id . '">Delete</button>';
+                    }
+                    return $editButton . ' ' . $deleteButton;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -33,6 +43,7 @@ class ProductsController extends Controller
 
     public function create()
     {
+
         $categories = Category::get();
         return view('admin.sections.products.create', [
             'title' => 'Products',

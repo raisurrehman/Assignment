@@ -8,9 +8,11 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
+                    @can('create-categories')
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCategoryModal">
                         Add Category
                     </button>
+                    @endcan
                 </ol>
             </div>
         </div>
@@ -34,7 +36,7 @@
                             @csrf
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input id="name" type="text" class="form-control" name="name"  autofocus>
+                                <input id="name" type="text" class="form-control" name="name" autofocus>
                                 <span class="text-danger" id="error" style="display:none">required *</span>
                             </div>
                             <div class="form-group">
@@ -215,9 +217,7 @@
             $('#confirmationModal').modal('hide');
         });
 
-        setTimeout(function () {
-            $('#alertDiv').hide();
-        }, 5000);
+
     });
 
 
