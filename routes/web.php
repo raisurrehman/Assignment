@@ -26,7 +26,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('permission:view-dashboard');
 
     Route::get('users', [UserController::class, 'index'])->name('users')->middleware('permission:view-users');
-    Route::get('users/create', [UserController::class, 'create'])->name('users.create')->middleware('permission:create-users');
+    Route::post('users/store', [UserController::class, 'store'])->name('users.store')->middleware('permission:create-users');
     Route::get('users/{userId}/assign-role', [UserController::class, 'assignRole'])->name('users.assign-role')->middleware('permission:assign-roles');
     Route::post('users/{userId}/assign-role', [UserController::class, 'updateAssignedRoles'])->name('users.assign-role')->middleware('permission:assign-roles');
 
